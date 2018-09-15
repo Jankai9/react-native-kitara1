@@ -27,7 +27,7 @@ export default class Otelauta extends React.Component {
     handlePress(evt) {
         console.disableYellowBox = false;
 
-        Alert.alert('moi ville');
+        Alert.alert('moi ville ja janne');
     }
  
     render() {

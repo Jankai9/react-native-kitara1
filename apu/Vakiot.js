@@ -1,8 +1,19 @@
 import Väli from '../components/Väli'
 import * as React from 'react';
+import UUIDGenerator from 'react-native-uuid-generator';
 
 let nauhaLkm = 21
 export const nuottikirjaimet = ['c','c#','d','d#','e','f','f#','g','g#','a','a#','h']
+
+function getRandom() {
+  let ret =1
+  console.dir(UUIDGenerator)
+  UUIDGenerator.getRandomUUID((uuid) => {
+    console.log("FFFFFFFF"+uuid);
+    ret = uuid
+  });
+  return ret
+}
 
 class Välitieto {
   constructor(nuotti, oktaavi, kieli, väli) {
@@ -12,10 +23,10 @@ class Välitieto {
     this.väli = väli
   }
 }
-
+ 
 export function annaVälit(kieli, nuotti, oktaavi) {
       const välit = annaVälitKielelle(kieli, nuotti, oktaavi)
-const kieliTagit = välit.map((v) =>(<Väli info={v} /> ))
+const kieliTagit = välit.map((v) =>(<Väli info={v} key={ "foo" } /> ))
       return kieliTagit
   }
 

@@ -32,10 +32,6 @@ const styles = StyleSheet.create({
   väli: {
     margin: 1,
     marginTop: 0,
-    fontSize: 14,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    color: '#34495e',
     width: 30,
     height: 20,
     backgroundColor: 'powderblue',

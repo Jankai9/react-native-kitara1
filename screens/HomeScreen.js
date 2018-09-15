@@ -31,11 +31,8 @@ export default class HomeScreen extends React.Component {
           </View>
 
           <View style={styles.getStartedContainer}>
-            {this._maybeRenderDevelopmentModeWarning()}
+            {/* this._maybeRenderDevelopmentModeWarning() */}
 
-            <Text style={styles.getStartedText}>
-              Kitara
-            </Text>
             <Otelauta />
           </View>
 

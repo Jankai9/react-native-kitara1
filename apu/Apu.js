@@ -6,44 +6,75 @@ import { nuottikirjaimet } from '../apu/Vakiot'
 let nauhaLkm = 21
 
 function getRandom() {
-  let ret =1
-  console.dir(UUIDGenerator)
-  UUIDGenerator.getRandomUUID((uuid) => {
-    ret = uuid
-  });
-  return ret
+    let ret = 1
+    console.dir(UUIDGenerator)
+    UUIDGenerator.getRandomUUID((uuid) => {
+        ret = uuid
+    });
+    return ret
 }
 
 class Välitieto {
-  constructor(nuotti, oktaavi, kieli, väli) {
-    this.nuotti = nuotti
-    this.oktaavi = oktaavi
-    this.kieli = kieli
-    this.väli = väli
-  }
+    constructor(nuotti, oktaavi, kieli, väli) {
+        this.nuotti = nuotti
+        this.oktaavi = oktaavi
+        this.kieli = kieli
+        this.väli = väli
+    }
 }
- 
+
+export class Välit {
+    constructor() {
+        this.välit = teeVälitKielelle(1, 'e', 3)
+        this.välit.push(...teeVälitKielelle(2, 'h', 3))
+        this.välit.push(...teeVälitKielelle(3, 'g', 2))
+        this.välit.push(...teeVälitKielelle(4, 'd', 2))
+        this.välit.push(...teeVälitKielelle(5, 'a', 1))
+        this.välit.push(...teeVälitKielelle(6, 'e', 1))
+        console.dir(this.välit)
+    }
+
+    // merkitään kaikki tietyt nuotit
+    merkitseVälit(nuotti) {
+        this.välit.forEach(väli => {
+            if(väli.nuotti == nuotti) {
+                väli.merkitty = true    
+            }
+        });
+    }
+
+    annaVälitKielelle(kieli) {
+        return this.välit.filter(väli => väli.kieli == kieli)
+    }
+
+    annaVälitagitKielelle(kieli) {
+        const välit = this.annaVälitKielelle(kieli)
+        const välitagit = this.annaVäliTagit(välit)
+        return välitagit
+    }    
+
+    annaVäliTagit(välit) {
+        const väliTagit = välit.map((v) => (<Väli info={v} key={id++} />))
+        return väliTagit
+    }
+}
+
 id = 1
-export function annaVälit(kieli, nuotti, oktaavi) {
-      const välit = annaVälitKielelle(kieli, nuotti, oktaavi)
-const kieliTagit = välit.map((v) =>(<Väli info={v} key={ id++ } /> ))
-      return kieliTagit
-  }
+
 
 // palauttaa kaikki otelaudan välit
 // väli 0 on vapaa kieli
-export function annaVälitKielelle(kieli, aloitusNuotti, oktaavi) {
-  // eka kieli alkaa E:stä
-  const nuotitKielelle1 = []
-  let kaikkiNuotit = [...nuottikirjaimet, ...nuottikirjaimet, ...nuottikirjaimet, ...nuottikirjaimet]
-  let aloitusIndeksi = kaikkiNuotit.findIndex((nuotti)=>nuotti==aloitusNuotti)
-  let kaikkiVälit = []
+function teeVälitKielelle(kieli, aloitusNuotti, oktaavi) {
+    // eka kieli alkaa E:stä
+    const nuotitKielelle1 = []
+    let kaikkiNuotit = [...nuottikirjaimet, ...nuottikirjaimet, ...nuottikirjaimet, ...nuottikirjaimet]
+    let aloitusIndeksi = kaikkiNuotit.findIndex((nuotti) => nuotti == aloitusNuotti)
+    let kaikkiVälit = []
 
-  for (let väli = 0; väli < nauhaLkm; väli++) {
-      let nuotti = kaikkiNuotit[aloitusIndeksi + väli]
-      const välitieto = new Välitieto(nuotti, 1,  kieli, väli)
-      kaikkiVälit.push(välitieto)
+    for (let väli = 0; väli < nauhaLkm; väli++) {
+        let nuotti = kaikkiNuotit[aloitusIndeksi + väli]
+        const välitieto = new Välitieto(nuotti, 1, kieli, väli)
+        kaikkiVälit.push(välitieto)
     }
-  console.dir(kaikkiVälit)  
-  return kaikkiVälit
+    return kaikkiVälit
 }

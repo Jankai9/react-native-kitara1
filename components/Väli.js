@@ -17,12 +17,12 @@ export default class Väli extends React.Component {
   render() {
     return (
       <View>
-        <TouchableOpacity onPress={evt => this.handlePress(evt)}>          
-          <View style={styles.väli}>
+        <TouchableOpacity onPress={evt => this.handlePress(evt)}>
+          <View style={[styles.väli, this.props.info.merkitty ? styles.merkitty : styles.eimerkitty]}>
             <Text>{this.props.info.nuotti}</Text>
           </View>
         </TouchableOpacity>
-        }
+        
       </View>
     );
   }
@@ -34,9 +34,15 @@ const styles = StyleSheet.create({
     marginTop: 0,
     width: 30,
     height: 20,
-    backgroundColor: 'powderblue',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+
+  merkitty: {
+    backgroundColor: 'red',
+  },
+  eimerkitty: {
+    backgroundColor: 'powderblue',
   }
-  
+
 });

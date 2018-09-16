@@ -7,10 +7,11 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "eject": "expo eject",
-    "test": "node ./node_modules/jest/bin/jest.js --watchAll"
+    "test": "node ./node_modules/jest/bin/jest.js --watchAll",
+    "postinstall": "rndebugger-open"
   },
   "jest": {
-    "preset": "jest-expo"
+    "preset": "jest-expo" 
   },
   "dependencies": {
     "@expo/samples": "2.1.1",

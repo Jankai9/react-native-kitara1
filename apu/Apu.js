@@ -1,0 +1,49 @@
+import Väli from '../components/Väli'
+import * as React from 'react';
+import UUIDGenerator from 'react-native-uuid-generator';
+import { nuottikirjaimet } from '../apu/Vakiot'
+
+let nauhaLkm = 21
+
+function getRandom() {
+  let ret =1
+  console.dir(UUIDGenerator)
+  UUIDGenerator.getRandomUUID((uuid) => {
+    ret = uuid
+  });
+  return ret
+}
+
+class Välitieto {
+  constructor(nuotti, oktaavi, kieli, väli) {
+    this.nuotti = nuotti
+    this.oktaavi = oktaavi
+    this.kieli = kieli
+    this.väli = väli
+  }
+}
+ 
+id = 1
+export function annaVälit(kieli, nuotti, oktaavi) {
+      const välit = annaVälitKielelle(kieli, nuotti, oktaavi)
+const kieliTagit = välit.map((v) =>(<Väli info={v} key={ id++ } /> ))
+      return kieliTagit
+  }
+
+// palauttaa kaikki otelaudan välit
+// väli 0 on vapaa kieli
+export function annaVälitKielelle(kieli, aloitusNuotti, oktaavi) {
+  // eka kieli alkaa E:stä
+  const nuotitKielelle1 = []
+  let kaikkiNuotit = [...nuottikirjaimet, ...nuottikirjaimet, ...nuottikirjaimet, ...nuottikirjaimet]
+  let aloitusIndeksi = kaikkiNuotit.findIndex((nuotti)=>nuotti==aloitusNuotti)
+  let kaikkiVälit = []
+
+  for (let väli = 0; väli < nauhaLkm; väli++) {
+      let nuotti = kaikkiNuotit[aloitusIndeksi + väli]
+      const välitieto = new Välitieto(nuotti, 1,  kieli, väli)
+      kaikkiVälit.push(välitieto)
+    }
+  console.dir(kaikkiVälit)  
+  return kaikkiVälit
+}

@@ -7,9 +7,8 @@ import {
     StyleSheet,
     Image,
 } from 'react-native';
-//import Väli from '../Väli';
 
-import { Nuotit, annaVälitKielelle, annaVälit } from '.././apu/Vakiot';
+import { Nuotit, annaVälitKielelle, annaVälit } from '../apu/Apu';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Otelauta extends React.Component {

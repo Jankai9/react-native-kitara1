@@ -1,14 +1,11 @@
 import * as React from 'react';
 import {
     Alert,
-    TouchableOpacity,
-    Text,
     View,
     StyleSheet,
-    Image,
 } from 'react-native';
 
-import { Nuotit, annaVälitKielelle, annaVälit } from '../apu/Apu';
+import { annaVälit } from '../apu/Apu';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Otelauta extends React.Component {

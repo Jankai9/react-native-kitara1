@@ -11,6 +11,7 @@ import {
 import { WebBrowser } from 'expo';
 
 import Otelauta from '.././components/Otelauta';
+import Nuottipaneeli from '../components/Nuottipaneeli';
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,  
@@ -33,15 +34,9 @@ export default class HomeScreen extends React.Component {
           <View style={styles.getStartedContainer}>
             {/* this._maybeRenderDevelopmentModeWarning() */}
 
+            <Nuottipaneeli />
             <Otelauta />
           </View>
-
-          <View style={styles.helpContainer}>
-            <TouchableOpacity onPress={this._handleHelpPress} style={styles.helpLink}>
-              <Text style={styles.helpLinkText}>Help, it didn’t automatically reload!</Text>
-            </TouchableOpacity>
-          </View>
-        
       </View>
     );
   }

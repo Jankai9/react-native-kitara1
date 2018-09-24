@@ -9,8 +9,8 @@ import {
 
 export default class Nuottinappi extends React.Component {
   handlePress(evt) {
-    console.disableYellowBox = false;
-    Alert.alert("painettu nuottia x")
+    console.dir(evt)
+    Alert.alert("painettu nuottia "+evt.target)
   }
 
   render() {
@@ -29,12 +29,10 @@ export default class Nuottinappi extends React.Component {
 
 const styles = StyleSheet.create({
   nuottinappi: {
-    /*
     margin: 1,
     marginTop: 0,
     width: 30,
     height: 20,
-    */
     backgroundColor: 'green',
   }
   

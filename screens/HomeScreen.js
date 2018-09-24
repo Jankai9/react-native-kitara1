@@ -9,14 +9,13 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
+import Peli from '../components/Peli'
 
-import Otelauta from '.././components/Otelauta';
-import Nuottipaneeli from '../components/Nuottipaneeli';
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
     header: null,  
   };
-
+ 
   render() {
     return (
       <View style={styles.container}>
@@ -33,9 +32,7 @@ export default class HomeScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
             {/* this._maybeRenderDevelopmentModeWarning() */}
-
-            <Nuottipaneeli />
-            <Otelauta />
+          <Peli /> 
           </View>
       </View>
     );

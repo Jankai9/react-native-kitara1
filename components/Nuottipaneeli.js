@@ -17,20 +17,22 @@ export default class Nuottipaneeli extends React.Component {
     }
 
     handlePress(evt) {
-        Alert.alert('valittu nuotti:');
+        Alert.alert('valittu nuotti:'+evt);
     }
 
     render() {
         const nuotit = ['c', 'd']
 
+        let n = 1
         return (
-           
             <View styles={styles.nuottipaneeli}>
                 { 
                     nuotit.map((v) => (
                         <Nuottinappi  
                             info={{ nuotti: 'C' }} 
-                            key={'NN' } /> ))
+                            key={'NN'+n++ }
+                            onclick={''} 
+                            /> ))
                 }
             </View>
         );

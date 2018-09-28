@@ -16,8 +16,8 @@ export default class Peli extends React.Component {
     super();
     console.log("constructor Peli")
     this.state = {
-      pelin_tila: 'SEIS',
-      korostettavaVäli: { kieli: 1, väli: 1 }
+      tila: 'SEIS',
+      korostettavaVäli: null
     }
   }
 
@@ -26,10 +26,15 @@ export default class Peli extends React.Component {
   }
 
   seuraavaKysymys() {
-    // kerrotaan otelaudalle mikä väli pitää korostaa
     let korostettavaVäli = this.arvoSeuraavaVäli()
-    // let korostettavaVäli = arvoSeuraavaVäli()
+    // välit.annaVäliInfo(korostettavaVäli)
     this.setState((state) => ({ ...state, korostettavaVäli }))
+  }
+
+  asetaPelinTila(tila) {
+    this.setState(state => (
+      { ...state, tila }
+    ))
   }
 
   arvoSeuraavaVäli() {
@@ -46,12 +51,10 @@ export default class Peli extends React.Component {
   }
 
   painettuAloita(evt) {
-    // näin voidaan päivittää useita tilapäivityksiä: parametri on vanha tila
-    this.setState((state) => (
-      { ...state, pelin_tila: 'KÄYNNISSÄ' }
-    ))
-    console.log(this.state.pelin_tila)
+    this.asetaPelinTila( 'KÄYNNISSÄ')
+    console.log(this.state.tila)
     this.seuraavaKysymys()
+    this.asetaPelinTila( 'ODOTTAA_VASTAUSTA')
   }
 
   componentDidMount() {
@@ -62,6 +65,12 @@ export default class Peli extends React.Component {
     console.log("componentWillMount Peli")
   }
 
+  nuottiValittu(evt,info) {
+    console.dir(info)
+    if(this.arvottuNuotti == info.nuotti) {
+      // TODO kasvata laskuria
+    }
+  }
 
   render() {
     console.log("render: Peli")
@@ -83,10 +92,10 @@ export default class Peli extends React.Component {
           </View>
         </TouchableOpacity>
         <View style={styles.tila}>
-          <Text>Tila: {this.state.pelin_tila}</Text>
+          <Text>Tila: {this.state.tila}</Text>
         </View>
 
-        <Nuottipaneeli />
+        <Nuottipaneeli kunPainettu={this.nuottiValittu}/>
         <Otelauta korostettavaVäli={this.state.korostettavaVäli} />
       </View>
     );

@@ -53,6 +53,15 @@ export class Välit {
         });
     }
 
+    annaVäliInfo(merkittäväVäli) {
+        this.välit.forEach(väli => {
+            if (väli.kieli == merkittäväVäli.kieli &&
+                väli.väli == merkittäväVäli.väli) {
+                return väli
+            }
+        });
+    }
+
     merkitseVainVälit(merkittäväVäli) {
         this.poistaMerkinnät()
         this.merkitseVälit(merkittäväVäli)

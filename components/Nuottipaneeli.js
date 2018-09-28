@@ -18,23 +18,6 @@ export default class Nuottipaneeli extends React.Component {
         Alert.alert('valittu nuotti:' + evt);
     }
 
-    render2() {
-        const nuotit = ['c', 'd']
-
-        let n = 1
-        return (
-            <View>
-                <View style={styles.nuottipaneeli}>
-                    <Text style={styles.xxx}>a</Text>
-                    <Text style={styles.xx}>a</Text>
-                </View>
-                <View styles={styles.nuottipaneeli}>
-                    <View style={styles.xx} ><Text>a</Text></View>
-                    <View style={styles.xx}><Text>b</Text></View>
-                </View>
-            </View>
-        );
-    }
 
     render() {
         const nuotit = nuottikirjaimet
@@ -47,7 +30,7 @@ export default class Nuottipaneeli extends React.Component {
                         <Nuottinappi
                             info={{ nuotti: n }}
                             key={'NN' + c++}
-                            onclick={''}
+                            kunPainettu={this.props.kunPainettu}
                         />))
                 }
             </View>

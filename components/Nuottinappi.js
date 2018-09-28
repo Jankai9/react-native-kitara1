@@ -16,7 +16,7 @@ export default class Nuottinappi extends React.Component {
   render() {
     return (
       <View>
-        <TouchableOpacity onPress={evt => this.handlePress(evt)}>          
+        <TouchableOpacity onPress={evt => this.props.kunPainettu(evt,this.props.info)}>          
           <View style={styles.nuottinappi} >
             <Text>{this.props.info.nuotti}</Text>
           </View>

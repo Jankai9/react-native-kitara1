@@ -10,19 +10,35 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 export default class Otelauta extends React.Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+        console.log("constructor: Otelauta")
         this.välit = new Välit()
-        this.välit.merkitseVälit('c')
+        // this.välit.merkitseVälit('c')
+        this.välit.poistaMerkinnät()
+        console.dir(this.props) 
+        if(this.props.korostettavaVäli) {
+            this.välit.merkitseVälit(this.props.korostettavaVäli)
+        }
+    }
+
+    componentDidMount() {
+        console.log("componentDidMount Otelauta")
+    }
+
+    componentWillMount() {
+        console.log("componentWillMount Otelauta")
     }
 
     handlePress(evt) {
-        console.disableYellowBox = false;
-
-        Alert.alert('moi ville ja janne');
     }
- 
+  
     render() {
+        console.log("render: Otelauta")
+        if(this.props.korostettavaVäli) {
+            this.välit.merkitseVainVälit(this.props.korostettavaVäli)
+        }
+        console.dir()
         return (
             <ScrollView alwaysBounceVertical={false} alwaysBounceHorizontal={false} indicatorStyle='black'>
                 <View styles={styles.otelauta}>

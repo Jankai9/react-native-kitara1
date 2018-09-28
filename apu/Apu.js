@@ -37,10 +37,33 @@ export class Välit {
     // merkitään kaikki tietyt nuotit
     merkitseVälit(nuotti) {
         this.välit.forEach(väli => {
-            if(väli.nuotti == nuotti) {
-                väli.merkitty = true    
+            if (väli.nuotti == nuotti) {
+                väli.merkitty = true
             }
         });
+    }
+
+    merkitseVälit(merkittäväVäli) {
+        this.välit.forEach(väli => {
+            if (väli.kieli == merkittäväVäli.kieli &&
+                väli.väli == merkittäväVäli.väli) {
+                väli.merkitty = true
+                return
+            }
+        });
+    }
+
+    merkitseVainVälit(merkittäväVäli) {
+        this.poistaMerkinnät()
+        this.merkitseVälit(merkittäväVäli)
+    }
+
+    poistaMerkinnät() {
+        this.välit.forEach(väli => {
+            väli.merkitty = false
+            return
+        }
+        );
     }
 
     annaVälitKielelle(kieli) {
@@ -51,7 +74,7 @@ export class Välit {
         const välit = this.annaVälitKielelle(kieli)
         const välitagit = this.annaVäliTagit(välit)
         return välitagit
-    }    
+    }
 
     annaVäliTagit(välit) {
         const väliTagit = välit.map((v) => (<Väli info={v} key={id++} />))

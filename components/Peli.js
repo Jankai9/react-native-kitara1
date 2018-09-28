@@ -9,35 +9,61 @@ import {
 import Nuottipaneeli from '../components/Nuottipaneeli'
 import Otelauta from '../components/Otelauta'
 
-export default class Nuottinappi extends React.Component {
+export default class Peli extends React.Component {
 
   constructor() {
     super();
+    console.log("constructor Peli")
     this.state = {
       pelin_tila: 'SEIS',
-      korostettavaVäli: null
+      korostettavaVäli: { kieli: 1, väli: 1 }
     }
   }
 
   painettuNuottia(evt) {
- 
+
   }
+
+  seuraavaKysymys() {
+    // kerrotaan otelaudalle mikä väli pitää korostaa
+    let korostettavaVäli = this.arvoSeuraavaVäli()
+    // let korostettavaVäli = arvoSeuraavaVäli()
+    this.setState((state) => ({ ...state, korostettavaVäli }))
+  }
+
+  arvoSeuraavaVäli() {
+    const arvottuVäli = {
+      kieli: this.getRandomInt(5) ,
+      väli: this.getRandomInt(3) 
+    }
+    return arvottuVäli
+  }
+
+  getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+  }
+
 
   painettuAloita(evt) {
-    this.setState(
-      { ...this.state, pelin_tila: 'KÄYNNISSÄ' }
-    )
-    kysySeuraavaVäli()
+    // näin voidaan päivittää useita tilapäivityksiä: parametri on vanha tila
+    this.setState((state) => (
+      { ...state, pelin_tila: 'KÄYNNISSÄ' }
+    ))
+    console.log(this.state.pelin_tila)
+    this.seuraavaKysymys()
   }
 
-  kysySeuraavaVäli() {
-    // kerrotaan otelaudalle mikä väli pitää korostaa
-    let korostettavaVäli = {kieli: 1, väli: 12 }
-    // let korostettavaVäli = arvoSeuraavaVäli()
-    this.setState({...this.state, korostettavaVäli}) 
+  componentDidMount() {
+    console.log("componentDidMount Peli")
   }
+
+  componentWillMount() {
+    console.log("componentWillMount Peli")
+  }
+
 
   render() {
+    console.log("render: Peli")
     return (
       <View>
         <TouchableOpacity onPress={evt => this.painettuAloita(evt)}>
@@ -45,13 +71,12 @@ export default class Nuottinappi extends React.Component {
             <Text>Aloita</Text>
           </View>
         </TouchableOpacity>
-        <View style={styles.aloita}>
+        <View style={styles.tila}>
           <Text>Tila: {this.state.pelin_tila}</Text>
         </View>
 
         <Nuottipaneeli />
         <Otelauta korostettavaVäli={this.state.korostettavaVäli} />
-
       </View>
     );
   }
@@ -63,7 +88,13 @@ const styles = StyleSheet.create({
     marginTop: 0,
     width: 80,
     height: 20,
+    backgroundColor: 'blue',
+  },
+  tila: {
+    margin: 1,
+    marginTop: 0,
+    width: 80,
+    height: 20,
     backgroundColor: 'yellow',
   }
-
 });

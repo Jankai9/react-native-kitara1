@@ -5,6 +5,7 @@ import {
   Text,
   View,
   StyleSheet,
+  Image
 } from 'react-native';
 import Nuottipaneeli from '../components/Nuottipaneeli'
 import Otelauta from '../components/Otelauta'
@@ -33,8 +34,8 @@ export default class Peli extends React.Component {
 
   arvoSeuraavaVäli() {
     const arvottuVäli = {
-      kieli: this.getRandomInt(5) ,
-      väli: this.getRandomInt(3) 
+      kieli: this.getRandomInt(5),
+      väli: this.getRandomInt(3)
     }
     return arvottuVäli
   }
@@ -65,7 +66,17 @@ export default class Peli extends React.Component {
   render() {
     console.log("render: Peli")
     return (
+
       <View>
+        <View style={styles.kuvaContainer}>
+          <Image
+            source={
+              require('../assets/images/robot-dev.png')
+            }
+            style={styles.kuvaImage}
+          />
+        </View>
+
         <TouchableOpacity onPress={evt => this.painettuAloita(evt)}>
           <View style={styles.aloita}>
             <Text>Aloita</Text>
@@ -96,5 +107,17 @@ const styles = StyleSheet.create({
     width: 80,
     height: 20,
     backgroundColor: 'yellow',
-  }
+  },
+  kuvaContainer: {
+    alignItems: 'center',
+    marginTop: 13,
+    marginBottom: 3,
+  },
+  kuvaImage: {
+    width: 30,
+    height: 30,
+    resizeMode: 'contain',
+    marginTop: 3,
+    marginLeft: -10,
+  },
 });

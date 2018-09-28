@@ -17,7 +17,7 @@ export default class Nuottinappi extends React.Component {
     return (
       <View>
         <TouchableOpacity onPress={evt => this.handlePress(evt)}>          
-          <View style={styles.nuottinappi}>
+          <View style={styles.nuottinappi} >
             <Text>{this.props.info.nuotti}</Text>
           </View>
         </TouchableOpacity>
@@ -29,11 +29,12 @@ export default class Nuottinappi extends React.Component {
 
 const styles = StyleSheet.create({
   nuottinappi: {
-    margin: 1,
+    margin: 1, 
     marginTop: 0,
     width: 30,
-    height: 20,
+    height: 30,
     backgroundColor: 'green',
+    justifyContent: 'center',
   }
   
 });

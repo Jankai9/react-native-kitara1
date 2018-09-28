@@ -58,7 +58,7 @@ export default class Otelauta extends React.Component {
                         {this.välit.annaVälitagitKielelle(5)}
                     </View>
                     <View style={styles.kieli}>
-                        {this.välit.annaVälitagitKielelle(5)}
+                        {this.välit.annaVälitagitKielelle(6)}
                     </View>
                 </View>
             </ScrollView>

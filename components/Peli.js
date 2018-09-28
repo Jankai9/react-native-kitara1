@@ -34,16 +34,16 @@ export default class Peli extends React.Component {
 
   arvoSeuraavaVäli() {
     const arvottuVäli = {
-      kieli: this.getRandomInt(5),
-      väli: this.getRandomInt(3)
+      kieli: this.arvoLuku(1,5),
+      väli: this.arvoLuku(0,3)
     }
+    console.dir(arvottuVäli)
     return arvottuVäli
   }
 
-  getRandomInt(max) {
-    return Math.floor(Math.random() * Math.floor(max));
+  arvoLuku(min,max) {
+    return Math.floor(Math.random() * Math.floor(max))+min;
   }
-
 
   painettuAloita(evt) {
     // näin voidaan päivittää useita tilapäivityksiä: parametri on vanha tila

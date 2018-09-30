@@ -1,132 +1,140 @@
-import * as React from 'react';
+import * as React from "react"
 import {
-  Alert,
-  TouchableOpacity,
-  Text,
-  View,
-  StyleSheet,
-  Image
-} from 'react-native';
-import Nuottipaneeli from '../components/Nuottipaneeli'
-import Otelauta from '../components/Otelauta'
+	Alert,
+	TouchableOpacity,
+	Text,
+	View,
+	StyleSheet,
+	Image
+} from "react-native"
+import Nuottipaneeli from "../components/Nuottipaneeli"
+import Otelauta from "../components/Otelauta"
+import { Välit } from "../apu/Apu"
 
 export default class Peli extends React.Component {
+	constructor() {
+		super()
+		this.välit = new Välit()
 
-  constructor() {
-    super();
-    console.log("constructor Peli")
-    this.state = {
-      tila: 'SEIS',
-      korostettavaVäli: null
-    }
-  }
+		console.log("constructor Peli")
+		this.state = {
+			tila: "SEIS",
+			korostettavaVäli: null
+		}
+	}
 
-  painettuNuottia(evt) {
+	painettuNuottia(evt) {}
 
-  }
+	seuraavaKysymys() {
+		const välitieto = this.arvoSeuraavaVäli()
+		this.arvottuVäli = välitieto
+		console.log("arvottu välitieto")
+		console.dir(välitieto)
+		this.setState(state => ({ ...state, korostettavaVäli: välitieto }))
+		this.asetaPelinTila("ODOTTAA_VASTAUSTA")
+	}
 
-  seuraavaKysymys() {
-    let korostettavaVäli = this.arvoSeuraavaVäli()
-    // välit.annaVäliInfo(korostettavaVäli)
-    this.setState((state) => ({ ...state, korostettavaVäli }))
-  }
+	asetaPelinTila(tila) {
+		this.setState(state => ({ ...state, tila }))
+	}
 
-  asetaPelinTila(tila) {
-    this.setState(state => (
-      { ...state, tila }
-    ))
-  }
+	arvoSeuraavaVäli() {
+		const arvottuVäli = {
+			kieli: this.arvoLuku(1, 5),
+			väli: this.arvoLuku(0, 3)
+		}
+		console.dir(arvottuVäli)
+		return this.välit.annaVäliTieto(arvottuVäli)
+	}
 
-  arvoSeuraavaVäli() {
-    const arvottuVäli = {
-      kieli: this.arvoLuku(1,5),
-      väli: this.arvoLuku(0,3)
-    }
-    console.dir(arvottuVäli)
-    return arvottuVäli
-  }
+	arvoLuku(min, max) {
+		return Math.floor(Math.random() * Math.floor(max)) + min
+	}
 
-  arvoLuku(min,max) {
-    return Math.floor(Math.random() * Math.floor(max))+min;
-  }
+	painettuAloita(evt) {
+		this.asetaPelinTila("KÄYNNISSÄ")
+		this.setState(state => ({ ...state, oikein: 0 }))
+		console.log(this.state.tila)
+		this.seuraavaKysymys()
+	}
 
-  painettuAloita(evt) {
-    this.asetaPelinTila( 'KÄYNNISSÄ')
-    console.log(this.state.tila)
-    this.seuraavaKysymys()
-    this.asetaPelinTila( 'ODOTTAA_VASTAUSTA')
-  }
+	componentDidMount() {
+		console.log("componentDidMount Peli")
+	}
 
-  componentDidMount() {
-    console.log("componentDidMount Peli")
-  }
+	componentWillMount() {
+		console.log("componentWillMount Peli")
+	}
 
-  componentWillMount() {
-    console.log("componentWillMount Peli")
-  }
+	käsitteleNuottiValittu(evt, info) {
+		console.dir(info)
+		if (this.arvottuVäli.nuotti == info.nuotti) {
+			console.log("oikein")
+			console.log(this)
+			this.setState(state => ({ ...state, oikein: state.oikein + 1 }))
+		}
+		console.dir(this)
+		this.seuraavaKysymys()
+	}
 
-  nuottiValittu(evt,info) {
-    console.dir(info)
-    if(this.arvottuNuotti == info.nuotti) {
-      // TODO kasvata laskuria
-    }
-  }
+	render() {
+		console.log("render: Peli")
+		return (
+			<View>
+				<View style={styles.kuvaContainer}>
+					<Image
+						source={require("../assets/images/robot-dev.png")}
+						style={styles.kuvaImage}
+					/>
+				</View>
 
-  render() {
-    console.log("render: Peli")
-    return (
+				<TouchableOpacity onPress={evt => this.painettuAloita(evt)}>
+					<View style={styles.aloita}>
+						<Text>Aloita</Text>
+					</View>
+				</TouchableOpacity>
+				<View style={styles.tila}>
+					<Text>Tila: {this.state.tila}</Text>
+					<Text>Oikein: {this.state.oikein}</Text>
+				</View>
 
-      <View>
-        <View style={styles.kuvaContainer}>
-          <Image
-            source={
-              require('../assets/images/robot-dev.png')
-            }
-            style={styles.kuvaImage}
-          />
-        </View>
-
-        <TouchableOpacity onPress={evt => this.painettuAloita(evt)}>
-          <View style={styles.aloita}>
-            <Text>Aloita</Text>
-          </View>
-        </TouchableOpacity>
-        <View style={styles.tila}>
-          <Text>Tila: {this.state.tila}</Text>
-        </View>
-
-        <Nuottipaneeli kunPainettu={this.nuottiValittu}/>
-        <Otelauta korostettavaVäli={this.state.korostettavaVäli} />
-      </View>
-    );
-  }
+				<Nuottipaneeli
+					kunPainettu={this.käsitteleNuottiValittu.bind(this)}
+				/>
+				<Otelauta
+					välit={this.välit}
+					korostettavaVäli={this.state.korostettavaVäli}
+				/>
+			</View>
+		)
+	}
 }
 
 const styles = StyleSheet.create({
-  aloita: {
-    margin: 1,
-    marginTop: 0,
-    width: 80,
-    height: 20,
-    backgroundColor: 'blue',
-  },
-  tila: {
-    margin: 1,
-    marginTop: 0,
-    width: 80,
-    height: 20,
-    backgroundColor: 'yellow',
-  },
-  kuvaContainer: {
-    alignItems: 'center',
-    marginTop: 13,
-    marginBottom: 3,
-  },
-  kuvaImage: {
-    width: 30,
-    height: 30,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-});
+	aloita: {
+		margin: 1,
+		marginTop: 0,
+		width: 80,
+		height: 20,
+		backgroundColor: "blue"
+	},
+	tila: {
+		margin: 1,
+		marginTop: 0,
+		width: 80,
+		height: 40,
+		backgroundColor: "yellow"
+	},
+	kuvaContainer: {
+		alignItems: "center",
+		marginTop: 13,
+		marginBottom: 3
+	},
+	kuvaImage: {
+		width: 30,
+		height: 30,
+		resizeMode: "contain",
+		marginTop: 3,
+		marginLeft: -10
+	}
+})

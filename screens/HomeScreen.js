@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import { WebBrowser } from 'expo';
-import Peli from '../components/Peli'
+import Aloitusnäyttö from '../components/Aloitusnäyttö'
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -22,7 +22,8 @@ export default class HomeScreen extends React.Component {
 
           <View style={styles.getStartedContainer}>
             {/* this._maybeRenderDevelopmentModeWarning() */}
-          <Peli /> 
+            {/* <Peli /> */}
+            <Aloitusnäyttö /> 
           </View>
       </View>
     );

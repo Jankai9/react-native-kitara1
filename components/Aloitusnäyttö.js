@@ -7,32 +7,50 @@ import {
 	Image,
 	ImageBackground
 } from "react-native"
+import Peli from '../components/Peli'
 
 export default class Aloitusnäyttö extends React.Component {
 	constructor() {
 		super()
-		this.setState({näyttö: 'aloitusnäyttö'})
+		// this.state=({toiminto: 'aloitusnäyttö'})
 	}
 
 	painettuAloita(evt) {
-		this.asetaPelinTila("KÄYNNISSÄ")
-		this.setState(state => ({ ...state, oikein: 0 }))
-		console.log(this.state.tila)
+		this.setState(state => ({ ...state, toiminto: "peli" }))
+		console.log(this.state.toiminto)
+	}
+
+	componentWillMount() {
+		console.log("componentDidMount")
+		this.state = { toiminto: "aloitusnäyttö" }
 	}
 
 	render() {
-		console.log("render: Peli")
-		return (
-			<View>
+		console.log("render Aoitusnäyttö")
+		console.log(this.state.toiminto)
+
+		if (this.state.toiminto === "aloitusnäyttö") {
+			rend = (
 				<View style={styles.kuvaContainer}>
 					<ImageBackground
 						source={require("../assets/images/aloituskuva_vaaka.png")}
 						style={styles.aloituskuvaImage}
 					>
-						<TouchableOpacity style={styles.aloita}>
-						</TouchableOpacity>
+						<TouchableOpacity
+							style={styles.aloita}
+							onPress={this.painettuAloita.bind(this)}
+						/>
 					</ImageBackground>
 				</View>
+			)
+		}
+
+		if (this.state.toiminto === 'peli')
+		{ rend = <Peli />}
+
+		return (
+			<View>
+				{rend}
 			</View>
 		)
 	}
@@ -58,7 +76,6 @@ const styles = StyleSheet.create({
 		marginLeft: 200,
 		height: 200,
 		width: 70,
-		backgroundColor: 'rgba(52, 52, 52, 0.3)',
-		
+		backgroundColor: "rgba(52, 52, 52, 0.3)"
 	}
 })

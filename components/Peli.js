@@ -53,9 +53,16 @@ export default class Peli extends React.Component {
 
 	painettuAloita(evt) {
 		this.asetaPelinTila("KÄYNNISSÄ")
-		this.setState(state => ({ ...state, oikein: 0 }))
+    this.setState(state => ({ ...state, oikein: 0 }))
+    this.setState(state => ({ ...state, väärin: 0 }))
 		console.log(this.state.tila)
 		this.seuraavaKysymys()
+	}
+
+	painettuLopeta(evt) {
+		this.asetaPelinTila("SEIS")
+		this.setState(state => ({ ...state, oikein: 0 }))
+		console.log(this.state.tila)
 	}
 
 	componentDidMount() {
@@ -72,13 +79,53 @@ export default class Peli extends React.Component {
 			console.log("oikein")
 			console.log(this)
 			this.setState(state => ({ ...state, oikein: state.oikein + 1 }))
-		}
+		} else {
+      this.setState(state => ({ ...state, väärin: state.väärin + 1 }))
+    }
 		console.dir(this)
 		this.seuraavaKysymys()
 	}
 
 	render() {
 		console.log("render: Peli")
+
+		lopetusNappi = ""
+		tilasto = ""
+		if (this.state.tila === "ODOTTAA_VASTAUSTA") {
+			lopetusNappi = (
+				<TouchableOpacity onPress={evt => this.painettuLopeta(evt)}>
+					<View style={styles.lopeta}>
+						<Text>Lopeta</Text>
+					</View>
+				</TouchableOpacity>
+			)
+			tilasto = (
+				<View style={styles.tilasto}>
+					<Text style={styles.oikein}>
+						Oikein: {this.state.oikein}
+					</Text>
+					<Text style={styles.väärin}>
+						Väärin: {this.state.väärin}
+					</Text>
+				</View>
+			)
+		}
+
+		aloitusNappi = ""
+		if (this.state.tila === "SEIS") {
+			aloitusNappi = (
+				<TouchableOpacity onPress={evt => this.painettuAloita(evt)}>
+					<View style={styles.aloita}>
+						<Text>Aloita</Text>
+					</View>
+				</TouchableOpacity>
+			)
+		}
+		tila = (
+			<View style={styles.tila}>
+				<Text>Tila: {this.state.tila}</Text>
+			</View>
+		)
 		return (
 			<View>
 				<View style={styles.kuvaContainer}>
@@ -87,17 +134,12 @@ export default class Peli extends React.Component {
 						style={styles.kuvaImage}
 					/>
 				</View>
-
-				<TouchableOpacity onPress={evt => this.painettuAloita(evt)}>
-					<View style={styles.aloita}>
-						<Text>Aloita</Text>
-					</View>
-				</TouchableOpacity>
-				<View style={styles.tila}>
-					<Text>Tila: {this.state.tila}</Text>
-					<Text>Oikein: {this.state.oikein}</Text>
+				<View style={styles.napit}>
+					{aloitusNappi}
+					{lopetusNappi}
 				</View>
-
+				{tilasto}
+				{tila}
 				<Nuottipaneeli
 					kunPainettu={this.käsitteleNuottiValittu.bind(this)}
 				/>
@@ -119,16 +161,39 @@ const styles = StyleSheet.create({
 		backgroundColor: "blue"
 	},
 	tila: {
-		margin: 1,
-		marginTop: 0,
-		width: 80,
-		height: 40,
-		backgroundColor: "yellow"
+    position: "absolute",
+    top: 50,
+    right: 20,
+    width: 70,
+    backgroundColor: "green"
+
 	},
+	napit: {
+		marginTop: 20
+	},
+	oikein: {
+		marginLeft: 0
+	},
+
+	väärin: {
+		marginLeft: 10
+	},
+
+	tilasto: {
+    position: 'absolute',
+    top: 20,
+    right: 220,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    backgroundColor: "yellow"
+	},
+
 	kuvaContainer: {
-		alignItems: "center",
-		marginTop: 13,
-		marginBottom: 3
+    position: "absolute",
+    top: 20,
+    right: 20,
+    width: 20,
+    height: 40,
 	},
 	kuvaImage: {
 		width: 30,

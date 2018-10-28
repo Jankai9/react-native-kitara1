@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   eimerkitty: {
-    backgroundColor: 'powderblue',
+    backgroundColor: 'rgba(255, 255, 255, 0.1)'
   }
 
 });

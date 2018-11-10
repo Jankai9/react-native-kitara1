@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Alert, View, StyleSheet, ImageBackground } from "react-native"
+import { Alert, View, StyleSheet, Image,ImageBackground } from "react-native"
 
 import { luoVäliTagitKielelle, Välit } from "../apu/Apu"
 import { ScrollView } from "react-native-gesture-handler"
@@ -39,15 +39,15 @@ export default class Otelauta extends React.Component {
 					alwaysBounceVertical={false}
 					alwaysBounceHorizontal={true}
 					indicatorStyle="black"
+					contentOffset={{x: 0, y: 0}}
 				>
-					<ImageBackground
+					<Image
 						source={require("../assets/images/otelauta_piirretty.png")}
 						style={styles.otelautaImage}
-						
-					>
+					/>
 						<View styles={styles.otelautaContainer}>
 							<View styles={styles.otelauta}>
-								<View style={styles.kieli}>
+								<View style={styles.kieli1}>
 									{this.props.välit.annaVälitagitKielelle(1)}
 								</View>
 								<View style={styles.kieli}>
@@ -65,10 +65,8 @@ export default class Otelauta extends React.Component {
 								<View style={styles.kieli}>
 									{this.props.välit.annaVälitagitKielelle(6)}
 								</View>
-
 							</View>
 						</View>
-					</ImageBackground>
 				</ScrollView>
 			</View>
 		)
@@ -82,12 +80,12 @@ const styles = StyleSheet.create({
 		marginBottom: 30,
 		backgroundColor: "blue"
 	},
-	scrollView: {
+	scrollView: {},
+	otelautaContainer: {
+		backgroundColor: "yellow"
 	},
 	otelautaContainer: {
-		marginLeft: 55,
-		marginTop: 35,
-		backgroundColor: "yellow"
+		marginTop: 10,
 	},
 	otelauta: {
 		flex: 1,
@@ -95,12 +93,18 @@ const styles = StyleSheet.create({
 	},
 	kieli: {
 		flex: 1,
-		flexDirection: "row"
+		flexDirection: "row",
+		marginTop: 19
+	},
+	kieli1: {
+		flex: 1,
+		flexDirection: "row",
+		marginTop: -9
 	},
 	otelautaImage: {
-		marginTop: 20,
-		marginLeft: 20,
+		position:'absolute',
+		marginLeft: 30,
 		height: "100%",
-		width: "100%"
+		width: "190%"
 	}
 })
